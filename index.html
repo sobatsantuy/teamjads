@@ -26,50 +26,44 @@
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
                         // Tanggal mulai dan informasi tim
-                        const startDate = new Date("2023-09-02");
-                        const team1 = ["Catur", "Tri", "Tyas", "Andre"];
-                        const team2 = ["Nauli", "Ega", "Ridho", "Siti"];
-                        const team3 = ["Munada", "Ismail", "Anton"];
-                        const activities = [
-                            "Bersih Posko Lantai 1 dan 2",
-                            "Bersih Halaman",
-                            "Memasak"
-                        ];
+                        // Tambahkan informasi anggota tim
+const teamMembers = {
+    "Team 1": ["Catur", "Tri", "Tyas", "Andre"],
+    "Team 2": ["Nauli", "Ega", "Ridho", "Siti"],
+    "Team 3": ["Munada", "Ismail", "Anton"]
+};
 
-                        // Ambil tanggal saat ini
-                        const currentDate = new Date();
+// Ambil tanggal saat ini
+const currentDate = new Date();
 
-                        // Hitung selisih hari
-                        const timeDiff = Math.abs(currentDate - startDate);
-                        const dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) % 9;
+// Hitung selisih hari
+const timeDiff = Math.abs(currentDate - startDate);
+const dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) % 9;
 
-                        // Tentukan tim berdasarkan selisih hari
-                        let currentTeam;
-                        if (dayDiff <= 3) {
-                            currentTeam = "Team 1";
-                        } else if (dayDiff <= 6) {
-                            currentTeam = "Team 2";
-                        } else {
-                            currentTeam = "Team 3";
-                        }
+// Tentukan tim berdasarkan selisih hari
+let currentTeam;
+if (dayDiff <= 3) {
+    currentTeam = "Team 1";
+} else if (dayDiff <= 6) {
+    currentTeam = "Team 2";
+} else {
+    currentTeam = "Team 3";
+}
 
-                        // Tentukan kegiatan berdasarkan waktu
-                        const currentTime = currentDate.getHours();
-                        let currentActivity;
-                        if ((currentTime >= 6 && currentTime < 7) ||
-                            (currentTime >= 12 && currentTime < 13) ||
-                            (currentTime >= 19 && currentTime < 20)) {
-                            currentActivity = activities.join(", ");
-                        } else {
-                            currentActivity = "Tidak ada kegiatan saat ini";
-                        }
+// Tampilkan informasi pada halaman
+const teamElement = document.querySelector("#team");
+const kegiatanElement = document.querySelector("#kegiatan");
 
-                        // Tampilkan informasi pada halaman
-                        const teamElement = document.querySelector("#team");
-                        const kegiatanElement = document.querySelector("#kegiatan");
-                        teamElement.textContent = currentTeam;
-                        kegiatanElement.textContent = currentActivity;
-                    });
+// Tampilkan tim dan anggotanya
+teamElement.textContent = currentTeam;
+if (currentTeam === "Team 1") {
+    kegiatanElement.textContent = activities.join(", ");
+    const team1Members = teamMembers["Team 1"].join(", ");
+    kegiatanElement.insertAdjacentHTML("beforeend", "<br>Anggota: " + team1Members);
+} else {
+    kegiatanElement.textContent = "Tidak ada kegiatan saat ini";
+}
+
                 </script>
             </tbody>
         </table>
