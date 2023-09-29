@@ -33,8 +33,9 @@
             const today = new Date();
             const hariIni = today.getDay(); // Mendapatkan hari ini (0 = Minggu, 1 = Senin, dst.)
             
-            const hariIniTimIndex = hariIni % jadwal.length;
-            const jadwalHariIni = jadwal[hariIniTimIndex];
+            // Menghitung indeks tim berdasarkan urutan setiap tiga hari
+            const timIndex = Math.floor(hariIni / 3) % jadwal.length;
+            const jadwalHariIni = jadwal[timIndex];
             
             const jadwalHTML = `
                 <h5>Team: ${jadwalHariIni.team}</h5>
