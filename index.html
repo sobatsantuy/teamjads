@@ -3,72 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
-    <title>Jadwal Piket</title>
+    <title>Jadwal Team</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Jadwal Piket</h1>
-        <div class="text-center">
-            <p>Tim Piket: <span id="team"></span></p>
-            <p>Kegiatan: <span id="kegiatan"></span></p>
+        <div class="card">
+            <div class="card-header">
+                Jadwal Team
+            </div>
+            <div class="card-body">
+                <div id="jadwal">
+                    <!-- Jadwal akan ditampilkan di sini menggunakan JavaScript -->
+                </div>
+            </div>
         </div>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Tanggal</th>
-                    <th>Team</th>
-                    <th>Kegiatan</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Tambahkan logika JavaScript untuk menampilkan jadwal berdasarkan tanggal -->
-                <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        // Tanggal mulai dan informasi tim
-                        // Tambahkan informasi anggota tim
-const teamMembers = {
-    "Team 1": ["Catur", "Tri", "Tyas", "Andre"],
-    "Team 2": ["Nauli", "Ega", "Ridho", "Siti"],
-    "Team 3": ["Munada", "Ismail", "Anton"]
-};
-
-// Ambil tanggal saat ini
-const currentDate = new Date();
-
-// Hitung selisih hari
-const timeDiff = Math.abs(currentDate - startDate);
-const dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) % 9;
-
-// Tentukan tim berdasarkan selisih hari
-let currentTeam;
-if (dayDiff <= 3) {
-    currentTeam = "Team 1";
-} else if (dayDiff <= 6) {
-    currentTeam = "Team 2";
-} else {
-    currentTeam = "Team 3";
-}
-
-// Tampilkan informasi pada halaman
-const teamElement = document.querySelector("#team");
-const kegiatanElement = document.querySelector("#kegiatan");
-
-// Tampilkan tim dan anggotanya
-teamElement.textContent = currentTeam;
-if (currentTeam === "Team 1") {
-    kegiatanElement.textContent = activities.join(", ");
-    const team1Members = teamMembers["Team 1"].join(", ");
-    kegiatanElement.insertAdjacentHTML("beforeend", "<br>Anggota: " + team1Members);
-} else {
-    kegiatanElement.textContent = "Tidak ada kegiatan saat ini";
-}
-
-                </script>
-            </tbody>
-        </table>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+        // Data jadwal
+        const jadwal = [
+            { team: "Team 1", anggota: ["Catur", "Tri", "Tyas", "Andre"] },
+            { team: "Team 2", anggota: ["Nauli", "Ega", "Ridho", "Siti"] },
+            { team: "Team 3", anggota: ["Munada", "Ismail", "Anton"] }
+        ];
+
+        // Fungsi untuk menampilkan jadwal
+        function tampilkanJadwal() {
+            const today = new Date();
+            const hariIni = today.getDay(); // Mendapatkan hari ini (0 = Minggu, 1 = Senin, dst.)
+            
+            const jadwalHariIni = jadwal[hariIni % jadwal.length];
+            
+            const jadwalHTML = `
+                <h5>Team: ${jadwalHariIni.team}</h5>
+                <p>Nama Anggota: ${jadwalHariIni.anggota.join(", ")}</p>
+                <p>Tanggal: ${new Date().toLocaleDateString()}</p>
+                <p>Kegiatan: Bersih posko lt1-lt2, halaman, dan memasak</p>
+                <p>Jam:
+                    Pagi 06.00 - 07.00<br>
+                    Siang 12.00 - 13.00<br>
+                    Malam 19.00 - 20.00
+                </p>
+                <p>NB: Jam sewaktu-waktu berubah tergantung dalam kegiatan proker</p>
+            `;
+            
+            document.getElementById("jadwal").innerHTML = jadwalHTML;
+        }
+
+        // Memanggil fungsi untuk menampilkan jadwal saat halaman dimuat
+        tampilkanJadwal();
+    </script>
 </body>
 </html>
