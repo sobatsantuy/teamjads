@@ -28,12 +28,13 @@
             { team: "Team 3", anggota: ["Munada", "Ismail", "Anton"] }
         ];
 
-        // Fungsi untuk menampilkan jadwal
+        // Fungsi untuk menampilkan jadwal berdasarkan urutan tim
         function tampilkanJadwal() {
             const today = new Date();
             const hariIni = today.getDay(); // Mendapatkan hari ini (0 = Minggu, 1 = Senin, dst.)
             
-            const jadwalHariIni = jadwal[hariIni % jadwal.length];
+            const hariIniTimIndex = hariIni % jadwal.length;
+            const jadwalHariIni = jadwal[hariIniTimIndex];
             
             const jadwalHTML = `
                 <h5>Team: ${jadwalHariIni.team}</h5>
