@@ -40,7 +40,11 @@
             { team: "Team 2", anggota: ["Nauli", "Ega", "Ridho", "Siti"] },
             { team: "Team 3", anggota: ["Munada", "Ismail", "Anton"] }
         ];
-
+// Fungsi untuk mendapatkan nama hari berdasarkan nomor hari (0 = Minggu, 1 = Senin, dst.)
+function getNamaHari(nomorHari) {
+    const namaHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+    return namaHari[nomorHari];
+}
         // Fungsi untuk menampilkan jadwal berdasarkan urutan tim
         function tampilkanJadwal() {
             const today = new Date();
