@@ -59,12 +59,19 @@
             // Menghitung indeks tim untuk hari besok
             const timIndexHariBesok = (timIndexHariIni + 1) % jadwal.length;
             const jadwalHariBesok = jadwal[timIndexHariBesok];
+            function tampilkanJadwalHariLusa() {
+    //lusa
+                const today = new Date();
+    const hariLusa = new Date(today.getTime() + 2 * 86400000); // Menghitung tanggal hari lusa
+
+    const timIndexHariLusa = (Math.floor(hariLusa.getDay() / 3) + 1) % jadwal.length;
+    const jadwalHariLusa = jadwal[timIndexHariLusa];
 
             // Menampilkan nama hari pada card header
             document.getElementById("namaHariIni").textContent = getNamaHari(today);
             document.getElementById("namaHariBesok").textContent = getNamaHari(new Date(today.getTime() + 86400000)); // Menambahkan 1 hari dalam milisekon
-
-            // Menampilkan jadwal hari ini
+            document.getElementById("namaHariLusa").textContent = getNamaHari(hariLusa);
+            // Manmpilkan jadwal hari ini
             const jadwalHTMLHariIni = `
                 <h5>Team: ${jadwalHariIni.team}</h5>
                 <p>Nama Anggota: ${jadwalHariIni.anggota.join(", ")}</p>
@@ -98,9 +105,27 @@
 
             document.getElementById("jadwalHariBesok").innerHTML = jadwalHTMLHariBesok;
         }
+// Menampilkan jadwal hari lusa
+    const jadwalHTMLHariLusa = `
+        <h5>Team: ${jadwalHariLusa.team}</h5>
+        <p>Nama Anggota: ${jadwalHariLusa.anggota.join(", ")}</p>
+        <p>Tanggal: ${hariLusa.toLocaleDateString()}</p>
+        <p>Kegiatan: Bersih posko lt1-lt2, halaman, dan memasak</p>
+        <p>Jam:
+            Pagi 06.00 - 07.00<br>
+            Siang 12.00 - 13.00<br>
+            Malam 19.00 - 20.00
+        </p>
+        <p>NB:*Jam Pagi Tetap diwajibkan <br>
+        *untuk Jam siang / malam sewaktu-waktu bisa berubah tergantung acara atau kegiatan</p>
+    `;
+
+    document.getElementById("jadwalHariLusa").innerHTML = jadwalHTMLHariLusa;
+}
 
         // Memanggil fungsi untuk menampilkan jadwal saat halaman dimuat
 tampilkanJadwal();
+tampilkanJadwalHariLusa();
 
 // Mengatur urutan tim berdasarkan hari Rabu sebagai awal
 if (today.getDay() === 3) { // Hari Rabu (0 = Minggu, 1 = Senin, ..., 6 = Sabtu)
