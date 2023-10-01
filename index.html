@@ -100,7 +100,20 @@
         }
 
         // Memanggil fungsi untuk menampilkan jadwal saat halaman dimuat
-        tampilkanJadwal();
+tampilkanJadwal();
+
+// Mengatur urutan tim berdasarkan hari Rabu sebagai awal
+if (today.getDay() === 3) { // Hari Rabu (0 = Minggu, 1 = Senin, ..., 6 = Sabtu)
+    rotateTim();
+}
+
+// Fungsi untuk mengganti urutan tim
+function rotateTim() {
+    const timIndexHariIni = Math.floor(today.getDay() / 3) % jadwal.length;
+    const timIndexHariBesok = (timIndexHariIni + 1) % jadwal.length;
+    jadwal.push(jadwal.shift()); // Mengganti urutan tim
+}
+        
     </script>
 </body>
 </html>
