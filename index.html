@@ -58,11 +58,13 @@
 
         // Fungsi untuk menampilkan jadwal berdasarkan urutan tim
         function tampilkanJadwal(targetElement, dayOffset) {
-            const today = new Date();
-            today.setDate(today.getDate() + dayOffset); // Mengatur tanggal berdasarkan offset
+    const today = new Date();
+    today.setDate(today.getDate() + dayOffset); // Set the date based on the offset
 
-            const timIndex = today.getDay() % jadwal.length;
-            const jadwalHariIni = jadwal[timIndex];
+    // Calculate the team index, ensuring it doesn't exceed the number of teams
+    const timIndex = (today.getDay() - 1 + jadwal.length) % jadwal.length;
+    const jadwalHariIni = jadwal[timIndex];
+
 
             const jadwalHTML = `
                 <h5>Team: ${jadwalHariIni.team}</h5>
