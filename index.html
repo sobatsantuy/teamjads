@@ -3,31 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jadwal Piket</title>
+    <title>Jadwal Team</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
         <div class="card">
             <div class="card-header">
-                Jadwal Piket Hari Ini
+                Jadwal Team
             </div>
             <div class="card-body">
-                <div id="jadwalHariIni">
-                    <!-- Jadwal hari ini akan ditampilkan di sini menggunakan JavaScript -->
+                <div id="jadwal-today">
+                    <!-- Jadwal untuk hari ini akan ditampilkan di sini menggunakan JavaScript -->
                 </div>
-            </div>
-        </div>
-
-        <div class="mt-3">
-            <div class="card">
-                <div class="card-header">
-                    Jadwal Piket Hari Besok
+                <div id="jadwal-tomorrow">
+                    <!-- Jadwal untuk besok akan ditampilkan di sini menggunakan JavaScript -->
                 </div>
-                <div class="card-body">
-                    <div id="jadwalHariBesok">
-                        <!-- Jadwal hari besok akan ditampilkan di sini menggunakan JavaScript -->
-                    </div>
+                <div id="jadwal-dayaftertomorrow">
+                    <!-- Jadwal untuk hari lusa akan ditampilkan di sini menggunakan JavaScript -->
                 </div>
             </div>
         </div>
@@ -42,20 +35,14 @@
         ];
 
         // Fungsi untuk menampilkan jadwal berdasarkan urutan tim
-        function tampilkanJadwal() {
+        function tampilkanJadwal(targetElement, dayOffset) {
             const today = new Date();
-            const hariIni = today.getDay(); // Mendapatkan hari ini (0 = Minggu, 1 = Senin, dst.)
+            today.setDate(today.getDate() + dayOffset); // Mengatur tanggal berdasarkan offset
 
-            // Menghitung indeks tim berdasarkan urutan setiap tiga hari
-            const timIndexHariIni = Math.floor(hariIni / 3) % jadwal.length;
-            const jadwalHariIni = jadwal[timIndexHariIni];
+            const timIndex = today.getDay() % jadwal.length;
+            const jadwalHariIni = jadwal[timIndex];
 
-            // Menghitung indeks tim untuk hari besok
-            const timIndexHariBesok = (timIndexHariIni + 1) % jadwal.length;
-            const jadwalHariBesok = jadwal[timIndexHariBesok];
-
-            // Menampilkan jadwal hari ini
-            const jadwalHTMLHariIni = `
+            const jadwalHTML = `
                 <h5>Team: ${jadwalHariIni.team}</h5>
                 <p>Nama Anggota: ${jadwalHariIni.anggota.join(", ")}</p>
                 <p>Tanggal: ${today.toLocaleDateString()}</p>
@@ -68,34 +55,13 @@
                 <p>NB: Jam sewaktu-waktu berubah tergantung dalam kegiatan proker</p>
             `;
 
-            document.getElementById("jadwalHariIni").innerHTML = jadwalHTMLHariIni;
-
-            // Menampilkan jadwal hari besok
-            const jadwalHTMLHariBesok = `
-                <h5>Team: ${jadwalHariBesok.team}</h5>
-                <p>Nama Anggota: ${jadwalHariBesok.anggota.join(", ")}</p>
-                <p>Tanggal: ${getTanggalBesok()}</p>
-                <p>Kegiatan: Bersih posko lt1-lt2, halaman, dan memasak</p>
-                <p>Jam:
-                    Pagi 06.00 - 07.00<br>
-                    Siang 12.00 - 13.00<br>
-                    Malam 19.00 - 20.00
-                </p>
-                <p>NB: Jam sewaktu-waktu berubah tergantung dalam kegiatan proker</p>
-            `;
-
-            document.getElementById("jadwalHariBesok").innerHTML = jadwalHTMLHariBesok;
+            document.getElementById(targetElement).innerHTML = jadwalHTML;
         }
 
-        // Fungsi untuk mendapatkan tanggal hari besok
-        function getTanggalBesok() {
-            const tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            return tomorrow.toLocaleDateString();
-        }
-
-        // Memanggil fungsi untuk menampilkan jadwal saat halaman dimuat
-        tampilkanJadwal();
+        // Memanggil fungsi untuk menampilkan jadwal hari ini, besok, dan hari lusa saat halaman dimuat
+        tampilkanJadwal("jadwal-today", 0);
+        tampilkanJadwal("jadwal-tomorrow", 1);
+        tampilkanJadwal("jadwal-dayaftertomorrow", 2);
     </script>
 </body>
 </html>
