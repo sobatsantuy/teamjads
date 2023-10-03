@@ -61,12 +61,12 @@
     const today = new Date();
     today.setDate(today.getDate() + dayOffset); // Set the date based on the offset
 
-    // Calculate the team index, ensuring it doesn't exceed the number of teams
-    let timIndex = (today.getDay() - 1) % jadwal.length;
-    if (timIndex < 0) {
-        timIndex = jadwal.length - 1; // If it's a Sunday, set it to the last team
-    }
+    // Calculate the team index to rotate through teams without duplication
+    const timIndex = (dayOffset / jadwal.length) % jadwal.length;
+    
     const jadwalHariIni = jadwal[timIndex];
+
+    //
 
 
             const jadwalHTML = `
