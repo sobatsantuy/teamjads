@@ -10,7 +10,7 @@
     <div class="container mt-5">
         <div class="card">
             <div class="card-header">
-                Jadwal Piket Hari Ini - <span id="namaHariIni"></span>
+                Jadwal Piket Hari Ini
             </div>
             <div class="card-body">
                 <div id="jadwalHariIni">
@@ -22,7 +22,7 @@
         <div class="mt-3">
             <div class="card">
                 <div class="card-header">
-                    Jadwal Piket Hari Besok - <span id="namaHariBesok"></span>
+                    Jadwal Piket Hari Besok
                 </div>
                 <div class="card-body">
                     <div id="jadwalHariBesok">
@@ -31,111 +31,71 @@
                 </div>
             </div>
         </div>
-        <div class="mt-3">
-    <div class="card">
-        <div class="card-header">
-            Jadwal Piket Hari Lusa - <span id="namaHariLusa"></span>
-        </div>
-        <div class="card-body">
-            <div id="jadwalHariLusa">
-                <!-- Jadwal hari lusa akan ditampilkan di sini menggunakan JavaScript -->
-            </div>
-        </div>
-    </div>
-        </div>
     </div>
 
     <script>
-    // Data jadwal
-    const jadwal = [
-        { team: "Team 1", anggota: ["Nauli", "Tri", "Siti", "Andre"] },
-        { team: "Team 2", anggota: ["Catur", "Ega", "Ridho", "Tyas"] },
-        { team: "Team 3", anggota: ["Munada", "Ismail", "Anton"] }
-    ];
+        // Data jadwal
+        const jadwal = [
+            { team: "Team 1", anggota: ["Catur", "Tri", "Tyas", "Andre"] },
+            { team: "Team 2", anggota: ["Nauli", "Ega", "Ridho", "Siti"] },
+            { team: "Team 3", anggota: ["Munada", "Ismail", "Anton"] }
+        ];
 
-    // Fungsi untuk menampilkan nama hari
-    function getNamaHari(tanggal) {
-        const namaHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-        return namaHari[tanggal.getDay()];
-    }
+        // Fungsi untuk menampilkan jadwal berdasarkan urutan tim
+        function tampilkanJadwal() {
+            const today = new Date();
+            const hariIni = today.getDay(); // Mendapatkan hari ini (0 = Minggu, 1 = Senin, dst.)
 
-    // Fungsi untuk menampilkan jadwal berdasarkan urutan tim
-    function tampilkanJadwal() {
-        const today = new Date();
-        const hariIni = today.getDay(); // Mendapatkan hari ini (0 = Minggu, 1 = Senin, dst.)
+            // Menghitung indeks tim berdasarkan urutan setiap tiga hari
+            const timIndexHariIni = Math.floor(hariIni / 3) % jadwal.length;
+            const jadwalHariIni = jadwal[timIndexHariIni];
 
-        // Menghitung indeks tim berdasarkan urutan setiap tiga hari
-        const timIndexHariIni = Math.floor(hariIni / 3) % jadwal.length;
-        const jadwalHariIni = jadwal[timIndexHariIni];
+            // Menghitung indeks tim untuk hari besok
+            const timIndexHariBesok = (timIndexHariIni + 1) % jadwal.length;
+            const jadwalHariBesok = jadwal[timIndexHariBesok];
 
-        // Menghitung indeks tim untuk hari besok
-        const timIndexHariBesok = (timIndexHariIni + 1) % jadwal.length;
-        const jadwalHariBesok = jadwal[timIndexHariBesok];
+            // Menampilkan jadwal hari ini
+            const jadwalHTMLHariIni = `
+                <h5>Team: ${jadwalHariIni.team}</h5>
+                <p>Nama Anggota: ${jadwalHariIni.anggota.join(", ")}</p>
+                <p>Tanggal: ${today.toLocaleDateString()}</p>
+                <p>Kegiatan: Bersih posko lt1-lt2, halaman, dan memasak</p>
+                <p>Jam:
+                    Pagi 06.00 - 07.00<br>
+                    Siang 12.00 - 13.00<br>
+                    Malam 19.00 - 20.00
+                </p>
+                <p>NB: Jam sewaktu-waktu berubah tergantung dalam kegiatan proker</p>
+            `;
 
-        // Menghitung indeks tim untuk hari lusa
-        const timIndexHariLusa = (timIndexHariIni + 2) % jadwal.length;
-        const jadwalHariLusa = jadwal[timIndexHariLusa];
+            document.getElementById("jadwalHariIni").innerHTML = jadwalHTMLHariIni;
 
-        // Menampilkan nama hari pada card header
-        document.getElementById("namaHariIni").textContent = getNamaHari(today);
-        document.getElementById("namaHariBesok").textContent = getNamaHari(new Date(today.getTime() + 86400000)); // Menambahkan 1 hari dalam milisekon
-        document.getElementById("namaHariLusa").textContent = getNamaHari(new Date(today.getTime() + 2 * 86400000));
+            // Menampilkan jadwal hari besok
+            const jadwalHTMLHariBesok = `
+                <h5>Team: ${jadwalHariBesok.team}</h5>
+                <p>Nama Anggota: ${jadwalHariBesok.anggota.join(", ")}</p>
+                <p>Tanggal: ${getTanggalBesok()}</p>
+                <p>Kegiatan: Bersih posko lt1-lt2, halaman, dan memasak</p>
+                <p>Jam:
+                    Pagi 06.00 - 07.00<br>
+                    Siang 12.00 - 13.00<br>
+                    Malam 19.00 - 20.00
+                </p>
+                <p>NB: Jam sewaktu-waktu berubah tergantung dalam kegiatan proker</p>
+            `;
 
-        // Menampilkan jadwal hari ini
-        const jadwalHTMLHariIni = `
-            <h5>Team: ${jadwalHariIni.team}</h5>
-            <p>Nama Anggota: ${jadwalHariIni.anggota.join(", ")}</p>
-            <p>Tanggal: ${today.toLocaleDateString()}</p>
-            <p>Kegiatan: Bersih posko lt1-lt2, halaman, dan memasak</p>
-            <p>Jam:
-                Pagi 06.00 - 07.00<br>
-                Siang 12.00 - 13.00<br>
-                Malam 19.00 - 20.00
-            </p>
-            <p>NB:*Jam Pagi Tetap diwajibkan <br>
-            *untuk Jam siang / malam sewaktu-waktu bisa berubah tergantung acara atau kegiatan</p>
-        `;
+            document.getElementById("jadwalHariBesok").innerHTML = jadwalHTMLHariBesok;
+        }
 
-        document.getElementById("jadwalHariIni").innerHTML = jadwalHTMLHariIni;
+        // Fungsi untuk mendapatkan tanggal hari besok
+        function getTanggalBesok() {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            return tomorrow.toLocaleDateString();
+        }
 
-        // Menampilkan jadwal hari besok
-        const jadwalHTMLHariBesok = `
-            <h5>Team: ${jadwalHariBesok.team}</h5>
-            <p>Nama Anggota: ${jadwalHariBesok.anggota.join(", ")}</p>
-            <p>Tanggal: ${new Date(today.getTime() + 86400000).toLocaleDateString()}</p>
-            <p>Kegiatan: Bersih posko lt1-lt2, halaman, dan memasak</p>
-            <p>Jam:
-                Pagi 06.00 - 07.00<br>
-                Siang 12.00 - 13.00<br>
-                Malam 19.00 - 20.00
-            </p>
-            <p>NB:*Jam Pagi Tetap diwajibkan <br>
-            *untuk Jam siang / malam sewaktu-waktu bisa berubah tergantung acara atau kegiatan</p>
-        `;
-
-        document.getElementById("jadwalHariBesok").innerHTML = jadwalHTMLHariBesok;
-
-        // Menampilkan jadwal hari lusa
-        const jadwalHTMLHariLusa = `
-            <h5>Team: ${jadwalHariLusa.team}</h5>
-            <p>Nama Anggota: ${jadwalHariLusa.anggota.join(", ")}</p>
-            <p>Tanggal: ${new Date(today.getTime() + 2 * 86400000).toLocaleDateString()}</p>
-            <p>Kegiatan: Gantian bersih posko lt1-lt2, halaman, dan memasak</p>
-            <p>Jam:
-                Pagi 06.00 - 07.00<br>
-                Siang 12.00 - 13.00<br>
-                Malam 19.00 - 20.00
-            </p>
-            <p>NB:*Jam Pagi Tetap diwajibkan <br>
-            *untuk Jam siang / malam sewaktu-waktu bisa berubah tergantung acara atau kegiatan</p>
-        `;
-
-        document.getElementById("jadwalHariLusa").innerHTML = jadwalHTMLHariLusa;
-    }
-
-    // Memanggil fungsi untuk menampilkan jadwal saat halaman dimuat
-    tampilkanJadwal();
-</script>
-
+        // Memanggil fungsi untuk menampilkan jadwal saat halaman dimuat
+        tampilkanJadwal();
+    </script>
 </body>
 </html>
