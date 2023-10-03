@@ -61,12 +61,9 @@
     const today = new Date();
     today.setDate(today.getDate() + dayOffset); // Set the date based on the offset
 
-    // Calculate the team index to rotate through teams without duplication
-    const timIndex = (dayOffset / jadwal.length) % jadwal.length;
-    
+    // Calculate the team index, ensuring it doesn't exceed the number of teams
+    const timIndex = (today.getDay() - 1 + jadwal.length) % jadwal.length;
     const jadwalHariIni = jadwal[timIndex];
-
-    //
 
 
             const jadwalHTML = `
