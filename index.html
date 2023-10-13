@@ -1,91 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jadwal Team</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jadwal Team</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        Jadwal Hari Ini
-                    </div>
-                    <div class="card-body">
-                        <div id="jadwal-today">
-                            <!-- Jadwal untuk hari ini akan ditampilkan di sini menggunakan JavaScript -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        Jadwal Besok
-                    </div>
-                    <div class="card-body">
-                        <div id="jadwal-tomorrow">
-                            <!-- Jadwal untuk besok akan ditampilkan di sini menggunakan JavaScript -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        Jadwal Hari Lusa
-                    </div>
-                    <div class="card-body">
-                        <div id="jadwal-dayaftertomorrow">
-                            <!-- Jadwal untuk hari lusa akan ditampilkan di sini menggunakan JavaScript -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Data jadwal
-        const jadwal = [
-            { team: "Team 1", anggota: ["Catur", "Tri", "Tyas", "Andre"] },
-            { team: "Team 2", anggota: ["Nauli", "Ega", "Ridho", "Siti"] },
-            { team: "Team 3", anggota: ["Munada", "Ismail", "Anton"] }
-        ];
-
-        // Fungsi untuk menampilkan jadwal berdasarkan urutan tim
-        function tampilkanJadwal(targetElement, dayOffset) {
-    const today = new Date();
-    today.setDate(today.getDate() + dayOffset); // Set the date based on the offset
-
-    // Calculate the team index, ensuring it doesn't exceed the number of teams
-    const timIndex = (today.getDay() - 1 + jadwal.length) % jadwal.length;
-    const jadwalHariIni = jadwal[timIndex];
-
-
-            const jadwalHTML = `
-                <h5>Team: ${jadwalHariIni.team}</h5>
-                <p>Nama Anggota: ${jadwalHariIni.anggota.join(", ")}</p>
-                <p>Tanggal: ${today.toLocaleDateString()}</p>
-                <p>Kegiatan: Bersih posko lt1-lt2, halaman, dan memasak</p>
-                <p>Jam:
-                    Pagi 06.00 - 07.00<br>
-                    Siang 12.00 - 13.00<br>
-                    Malam 19.00 - 20.00
-                </p>
-                <p>NB: Jam sewaktu-waktu berubah tergantung dalam kegiatan proker</p>
-            `;
-
-            document.getElementById(targetElement).innerHTML = jadwalHTML;
-        }
-
-        // Memanggil fungsi untuk menampilkan jadwal hari ini, besok, dan hari lusa saat halaman dimuat
-        tampilkanJadwal("jadwal-today", 0);
-        tampilkanJadwal("jadwal-tomorrow", 1);
-        tampilkanJadwal("jadwal-dayaftertomorrow", 2);
-    </script>
+<div class="container mt-5">
+<div class="row">
+<div class="col-md-4">
+<div class="card">
+<div class="card-header">
+Jadwal Hari Ini
+</div>
+<div class="card-body">
+<div id="jadwal-today">
+<!-- Jadwal untuk hari ini akan ditampilkan di sini menggunakan JavaScript -->
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="card">
+<div class="card-header">
+Jadwal Besok
+</div>
+<div class="card-body">
+<div id="jadwal-tomorrow">
+<!-- Jadwal untuk besok akan ditampilkan di sini menggunakan JavaScript -->
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="card">
+<div class="card-header">
+Jadwal Hari Lusa
+</div>
+<div class="card-body">
+<div id="jadwal-dayaftertomorrow">
+<!-- Jadwal untuk hari lusa akan ditampilkan di sini menggunakan JavaScript -->
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+// Data jadwal
+const jadwal = [
+{ team: "Team 1", anggota: ["Nauli", "Ega", "Ridho", "Siti"] },
+{ team: "Team 2", anggota: ["Catur", "Tri", "Tyas", "Andre"] },
+{ team: "Team 3", anggota: ["Munada", "Ismail", "Anton"] }
+];
+// Fungsi untuk menampilkan jadwal berdasarkan urutan tim
+function tampilkanJadwal(targetElement, dayOffset) {
+const today = new Date();
+today.setDate(today.getDate() + dayOffset); // Set the date based on the offset
+// For Sunday, display all three teams together
+if (today.getDay() === 0) {
+const jadwalHTML = `
+<h5>Jadwal untuk Hari Minggu</h5>
+<p>Team 1: ${jadwal[0].anggota.join(", ")}</p>
+<p>Team 2: ${jadwal[1].anggota.join(", ")}</p>
+<p>Team 3: ${jadwal[2].anggota.join(", ")}</p>
+<p>Tanggal: ${today.toLocaleDateString()}</p>
+<p>Kegiatan: Bersih posko lt1-lt2, halaman, dan memasak</p>
+<p>Jam:
+Pagi 06.00 - 07.00<br>
+Siang 12.00 - 13.00<br>
+Malam 19.00 - 20.00
+</p>
+<p>NB: Jam sewaktu-waktu berubah tergantung dalam kegiatan proker</p>
+`;
+document.getElementById(targetElement).innerHTML = jadwalHTML;
+} else {
+// For other days, display each team's schedule as before
+const timIndex = (today.getDay() - 1 + jadwal.length) % jadwal.length;
+const jadwalHariIni = jadwal[timIndex];
+const jadwalHTML = `
+<h5>Team: ${jadwalHariIni.team}</h5>
+<p>Nama Anggota: ${jadwalHariIni.anggota.join(", ")}</p>
+<p>Tanggal: ${today.toLocaleDateString()}</p>
+<p>Kegiatan: Bersih posko lt1-lt2, halaman, dan memasak</p>
+<p>Jam:
+Pagi 06.00 - 07.00<br>
+Siang 12.00 - 13.00<br>
+Malam 19.00 - 20.00
+</p>
+<p>NB: Jam sewaktu-waktu berubah tergantung dalam kegiatan proker</p>
+`;
+document.getElementById(targetElement).innerHTML = jadwalHTML;
+}
+}
+// Memanggil fungsi untuk menampilkan jadwal hari ini, besok, dan hari lusa saat halaman dimuat
+tampilkanJadwal("jadwal-today", 0);
+tampilkanJadwal("jadwal-tomorrow", 1);
+tampilkanJadwal("jadwal-dayaftertomorrow", 2);
+</script>
 </body>
 </html>
